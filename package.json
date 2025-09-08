@@ -1,7 +1,7 @@
 {
-  "name": "ngx-monaco-editor",
-  "version": "12.0.0",
-  "description": "Monaco Code Editor For Angular",
+  "name": "@consorg/ngx-monaco-editor",
+  "version": "11.0.0",
+  "description": "[fork] Monaco Code Editor For Angular",
   "keywords": [
     "angular",
     "monaco",
@@ -20,50 +20,52 @@
     "lint": "ng lint",
     "e2e": "ng e2e",
     "build-editor": "npm run copy:readme && ng build editor",
+    "build-install": "npm run build-editor && npm install ./dist/editor/",
     "npm-publish": "npm run build-editor && bash npm-publish",
     "copy:readme": "cp -rf README.md projects/editor/"
   },
   "private": false,
   "repository": {
     "type": "git",
-    "url": "https://github.com/atularen/ngx-monaco-editor.git"
+    "url": "https://github.com/Consorg-SA/ngx-monaco-editor.git"
   },
   "bugs": {
-    "url": "https://github.com/atularen/ngx-monaco-editor/issues"
+    "url": "https://github.com/Consorg-SA/ngx-monaco-editor/issues"
   },
   "author": "Atul Kumar",
   "contributors": [
     "Atul Kumar <atulaggarwal4288@gmail.com>"
   ],
   "dependencies": {
-    "@angular/animations": "~12.0.0",
-    "@angular/common": "~12.0.0",
-    "@angular/compiler": "~12.0.0",
-    "@angular/core": "~12.0.0",
-    "@angular/forms": "~12.0.0",
-    "@angular/platform-browser": "~12.0.0",
-    "@angular/platform-browser-dynamic": "~12.0.0",
-    "@angular/router": "~12.0.0",
-    "monaco-editor": "^0.24.0",
-    "rxjs": "~6.6.0",
-    "tslib": "^2.1.0",
-    "zone.js": "~0.11.4"
+    "@angular/animations": "^11.0.0",
+    "@angular/common": "^11.0.0",
+    "@angular/compiler": "^11.0.0",
+    "@angular/core": "^11.0.0",
+    "@angular/forms": "^11.0.0",
+    "@angular/platform-browser": "^11.0.0",
+    "@angular/platform-browser-dynamic": "^11.0.0",
+    "@angular/router": "^11.0.0",
+    "@consorg/ngx-monaco-editor": "file:dist/editor",
+    "monaco-editor": "^0.52.2",
+    "rxjs": "~6.5.4",
+    "tslib": "^2.0.0",
+    "zone.js": "~0.10.2"
   },
   "devDependencies": {
-    "@angular-devkit/build-angular": "~12.0.0",
-    "@angular/cli": "~12.0.0",
-    "@angular/compiler-cli": "~12.0.0",
-    "@angular/language-service": "~12.0.0",
-    "@types/jasmine": "~3.6.0",
+    "@angular-devkit/build-angular": "~0.1102.19",
+    "@angular/cli": "^11.0.0",
+    "@angular/compiler-cli": "^11.0.0",
+    "@angular/language-service": "^11.0.0",
+    "@types/jasmine": "~3.8.0",
     "@types/node": "^12.11.1",
-    "jasmine-core": "~3.7.0",
-    "karma": "~6.3.0",
+    "jasmine-core": "~3.8.0",
+    "karma": "~6.4.2",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "^1.5.0",
-    "ng-packagr": "^12.0.0",
+    "ng-packagr": "^11.0.0",
     "npm-run-all": "^4.1.5",
-    "typescript": "~4.2.3"
+    "typescript": "~4.0.8"
   }
 }
