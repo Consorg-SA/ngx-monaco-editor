@@ -10,6 +10,7 @@ export abstract class BaseEditor implements AfterViewInit, OnDestroy {
 
   @ViewChild('editorContainer', { static: true }) _editorContainer: ElementRef;
 
+  @Input() i18nLang = 'en';
   @Input() resizeDebounceTimeMs = 250;
 
   @Output() onInit = new EventEmitter<any>();
@@ -37,6 +38,15 @@ export abstract class BaseEditor implements AfterViewInit, OnDestroy {
         const onGotAmdLoader: any = () => {
           // Load monaco
           (<any>window).require.config({ paths: { 'vs': `${baseUrl}` } });
+          if (this.i18nLang && this.i18nLang != 'en')
+            (<any>window).require.config({
+              'vs/nls': {
+                availableLanguages: {
+                  '*': this.i18nLang
+                }
+              }
+            });
+
           (<any>window).require([`vs/editor/editor.main`], () => {
             if (typeof this.config.onMonacoLoad === 'function') {
               this.config.onMonacoLoad();
