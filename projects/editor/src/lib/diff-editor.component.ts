@@ -58,7 +58,7 @@ export class DiffEditorComponent extends BaseEditor {
     }
   }
 
-  constructor(@Inject(NGX_MONACO_EDITOR_CONFIG) private editorConfig: NgxMonacoEditorConfig) {
+  constructor(@Inject(NGX_MONACO_EDITOR_CONFIG) editorConfig: NgxMonacoEditorConfig) {
     super(editorConfig);
   }
 
@@ -83,12 +83,7 @@ export class DiffEditorComponent extends BaseEditor {
       modified: modifiedModel
     });
 
-    // refresh layout on resize event.
-    if (this._windowResizeSubscription) {
-      this._windowResizeSubscription.unsubscribe();
-    }
-    this._windowResizeSubscription = fromEvent(window, 'resize').subscribe(() => this._editor.layout());
-    this.onInit.emit(this._editor);
+    this.afterMonacoInit();
   }
 
 }

@@ -1,21 +1,24 @@
-import { AfterViewInit, Component, ElementRef, EventEmitter, Inject, OnDestroy, Output, ViewChild } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { AfterViewInit, ElementRef, EventEmitter, Inject, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { fromEvent, Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { NGX_MONACO_EDITOR_CONFIG, NgxMonacoEditorConfig } from './config';
 
 let loadedMonaco = false;
 let loadPromise: Promise<void>;
 
-@Component({
-  template: ''
-})
 export abstract class BaseEditor implements AfterViewInit, OnDestroy {
+
   @ViewChild('editorContainer', { static: true }) _editorContainer: ElementRef;
+
+  @Input() resizeDebounceTimeMs = 250;
+
   @Output() onInit = new EventEmitter<any>();
+
   protected _editor: any;
   protected _options: any;
   protected _windowResizeSubscription: Subscription;
 
-  constructor(@Inject(NGX_MONACO_EDITOR_CONFIG) protected config: NgxMonacoEditorConfig) {}
+  constructor(protected config: NgxMonacoEditorConfig) {}
 
   ngAfterViewInit(): void {
     if (loadedMonaco) {
@@ -26,11 +29,11 @@ export abstract class BaseEditor implements AfterViewInit, OnDestroy {
     } else {
       loadedMonaco = true;
       loadPromise = new Promise<void>((resolve: any) => {
-        const baseUrl = (this.config.baseUrl || './assets') + '/monaco-editor/min/vs';
         if (typeof ((<any>window).monaco) === 'object') {
           resolve();
           return;
         }
+        const baseUrl = (this.config.baseUrl || './assets') + '/monaco-editor/min/vs';
         const onGotAmdLoader: any = () => {
           // Load monaco
           (<any>window).require.config({ paths: { 'vs': `${baseUrl}` } });
@@ -67,5 +70,17 @@ export abstract class BaseEditor implements AfterViewInit, OnDestroy {
       this._editor.dispose();
       this._editor = undefined;
     }
+  }
+
+  protected afterMonacoInit() {
+    // refresh layout on resize event.
+    if (this._windowResizeSubscription) {
+      this._windowResizeSubscription.unsubscribe();
+    }
+    this._windowResizeSubscription = fromEvent(window, 'resize')
+      .pipe(debounceTime(this.resizeDebounceTimeMs))
+      .subscribe(() => this._editor.layout())
+    ;
+    this.onInit.emit(this._editor);
   }
 }
