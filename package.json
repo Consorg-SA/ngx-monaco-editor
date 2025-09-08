@@ -22,7 +22,10 @@
     "build-editor": "npm run copy:readme && ng build editor",
     "build-install": "npm run build-editor && npm install ./dist/editor/",
     "npm-publish": "npm run build-editor && bash npm-publish",
-    "copy:readme": "cp -rf README.md projects/editor/"
+    "copy:readme": "cp -rf README.md projects/editor/",
+    "bump-patch": "npm version --git-tag-version=false patch > .ver && git add package.json package-lock.json && cd ./projects/editor && npm version --git-tag-version=false patch && git add package.json && cd ../.. && git commit --file=.ver && del /q .ver",
+    "bump-minor": "npm version --git-tag-version=false minor > .ver && git add package.json package-lock.json && cd ./projects/editor && npm version --git-tag-version=false minor && git add package.json && cd ../.. && git commit --file=.ver && del /q .ver",
+    "bump-major": "npm version --git-tag-version=false major > .ver && git add package.json package-lock.json && cd ./projects/editor && npm version --git-tag-version=false major && git add package.json && cd ../.. && git commit --file=.ver && del /q .ver"
   },
   "private": false,
   "repository": {
