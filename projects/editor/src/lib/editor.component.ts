@@ -10,18 +10,8 @@ declare var monaco: any;
 
 @Component({
   selector: 'ngx-monaco-editor',
-  template: '<div class="editor-container" #editorContainer></div>',
-  styles: [`
-      :host {
-          display: block;
-          height: 200px;
-      }
-
-      .editor-container {
-          width: 100%;
-          height: 98%;
-      }
-  `],
+  templateUrl: './base-editor.component.html',
+  styles: [ './base-editor.component.css' ],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => EditorComponent),
