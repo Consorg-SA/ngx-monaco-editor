@@ -10,7 +10,7 @@ declare var monaco: any;
 @Component({
   selector: 'ngx-monaco-diff-editor',
   templateUrl: './base-editor.component.html',
-  styles: [ './base-editor.component.css' ]
+  styleUrls: [ './base-editor.component.css' ]
 })
 export class DiffEditorComponent extends BaseEditor {
 

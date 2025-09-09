@@ -11,7 +11,7 @@ declare var monaco: any;
 @Component({
   selector: 'ngx-monaco-editor',
   templateUrl: './base-editor.component.html',
-  styles: [ './base-editor.component.css' ],
+  styleUrls: [ './base-editor.component.css' ],
   providers: [{
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => EditorComponent),
