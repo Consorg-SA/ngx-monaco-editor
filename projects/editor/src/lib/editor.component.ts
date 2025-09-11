@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, forwardRef, Inject, Input, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, forwardRef, Inject, Input, NgZone, Output } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 
@@ -46,6 +46,8 @@ export class EditorComponent extends BaseEditor implements ControlValueAccessor 
       this.initMonaco(this.options);
     }
   }
+
+  @Output() onDidChangeModelContent = new EventEmitter<string>();
 
   constructor(private zone: NgZone, @Inject(NGX_MONACO_EDITOR_CONFIG) editorConfig: NgxMonacoEditorConfig) {
     super(editorConfig);
@@ -96,6 +98,7 @@ export class EditorComponent extends BaseEditor implements ControlValueAccessor 
       this.zone.run(() => {
         this.propagateChange(value);
         this._value = value;
+        this.onDidChangeModelContent.emit(value);
       });
     });
 
