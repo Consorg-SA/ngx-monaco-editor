@@ -1,4 +1,4 @@
-import { Component, forwardRef, Inject, Input, NgZone } from '@angular/core';
+import { ChangeDetectionStrategy, Component, forwardRef, Inject, Input, NgZone } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 import { fromEvent } from 'rxjs';
 
@@ -16,7 +16,8 @@ declare var monaco: any;
     provide: NG_VALUE_ACCESSOR,
     useExisting: forwardRef(() => EditorComponent),
     multi: true
-  }]
+  }],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditorComponent extends BaseEditor implements ControlValueAccessor {
   private _value: string = '';

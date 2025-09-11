@@ -1,4 +1,4 @@
-import { Component, Inject, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Input } from '@angular/core';
 import { fromEvent } from 'rxjs';
 
 import { BaseEditor } from './base-editor';
@@ -10,7 +10,8 @@ declare var monaco: any;
 @Component({
   selector: 'ngx-monaco-diff-editor',
   templateUrl: './base-editor.component.html',
-  styleUrls: [ './base-editor.component.css' ]
+  styleUrls: [ './base-editor.component.css' ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DiffEditorComponent extends BaseEditor {
 
