@@ -22,7 +22,16 @@ declare var monaco: typeof Monaco;
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditorComponent extends BaseEditor<Monaco.editor.IStandaloneCodeEditor> implements ControlValueAccessor {
+  
+  get pristine() { return this._pristine; }
+
+  get dirty() { return !this._pristine; }
+
+
+
   private _value: string = '';
+  private _pristine: boolean = true;
+  private initialValueVersionId: number;
 
   propagateChange = (_: any) => {};
   onTouched = () => {};
@@ -58,11 +67,16 @@ export class EditorComponent extends BaseEditor<Monaco.editor.IStandaloneCodeEdi
   writeValue(value: any): void {
     this._value = value || '';
     // Fix for value change while dispose in process.
-    setTimeout(() => {
-      if (this._editor && !this.options.model) {
-        this._editor.setValue(this._value);
+    // setTimeout(() => {
+      if (this._editor) {
+        if (this.options.model)
+          console.warn('Not setting value from [ngModel] binding ([model] binding exists and value is not falsy)');
+        else {
+          this._editor.setValue(this._value);
+          this.markAsPristine();
+        }
       }
-    });
+    // });
   }
 
   registerOnChange(fn: any): void {
@@ -71,6 +85,11 @@ export class EditorComponent extends BaseEditor<Monaco.editor.IStandaloneCodeEdi
 
   registerOnTouched(fn: any): void {
     this.onTouched = fn;
+  }
+
+  markAsPristine() {
+    this.initialValueVersionId = this._editor.getModel().getAlternativeVersionId();
+    this._pristine = true;
   }
 
   protected initMonaco(options: any): void {
@@ -93,6 +112,9 @@ export class EditorComponent extends BaseEditor<Monaco.editor.IStandaloneCodeEdi
       this._editor.setValue(this._value);
     }
 
+    this.initialValueVersionId = this._editor.getModel().getAlternativeVersionId();
+    this._pristine = true;
+
     this._editor.onDidChangeModelContent((e: any) => {
       const value = this._editor.getValue();
 
@@ -100,6 +122,7 @@ export class EditorComponent extends BaseEditor<Monaco.editor.IStandaloneCodeEdi
       this.zone.run(() => {
         this.propagateChange(value);
         this._value = value;
+        this._pristine = (this.initialValueVersionId === this._editor.getModel().getAlternativeVersionId());
         this.onDidChangeModelContent.emit(value);
       });
     });
