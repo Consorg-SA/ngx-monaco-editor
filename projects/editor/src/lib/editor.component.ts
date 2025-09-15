@@ -6,7 +6,9 @@ import { BaseEditor } from './base-editor';
 import { NGX_MONACO_EDITOR_CONFIG, NgxMonacoEditorConfig } from './config';
 import { NgxEditorModel } from './types';
 
-declare var monaco: any;
+import type * as Monaco from 'monaco-editor';
+
+declare var monaco: typeof Monaco;
 
 @Component({
   selector: 'ngx-monaco-editor',
@@ -19,7 +21,7 @@ declare var monaco: any;
   }],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class EditorComponent extends BaseEditor implements ControlValueAccessor {
+export class EditorComponent extends BaseEditor<Monaco.editor.IStandaloneCodeEditor> implements ControlValueAccessor {
   private _value: string = '';
 
   propagateChange = (_: any) => {};

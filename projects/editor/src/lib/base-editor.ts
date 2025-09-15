@@ -3,10 +3,12 @@ import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { NGX_MONACO_EDITOR_CONFIG, NgxMonacoEditorConfig } from './config';
 
+import type * as Monaco from 'monaco-editor';
+
 let loadedMonaco = false;
 let loadPromise: Promise<void>;
 
-export abstract class BaseEditor implements AfterViewInit, OnDestroy {
+export abstract class BaseEditor<T extends Monaco.editor.IEditor> implements AfterViewInit, OnDestroy {
 
   @ViewChild('editorContainer', { static: true }) _editorContainer: ElementRef;
 
@@ -15,7 +17,7 @@ export abstract class BaseEditor implements AfterViewInit, OnDestroy {
 
   @Output() onInit = new EventEmitter<any>();
 
-  protected _editor: any;
+  protected _editor: T;
   protected _options: any;
   protected _windowResizeSubscription: Subscription;
 

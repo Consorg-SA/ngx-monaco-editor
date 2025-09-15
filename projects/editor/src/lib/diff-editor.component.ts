@@ -5,7 +5,9 @@ import { BaseEditor } from './base-editor';
 import { NGX_MONACO_EDITOR_CONFIG, NgxMonacoEditorConfig } from './config';
 import { DiffEditorModel } from './types';
 
-declare var monaco: any;
+import type * as Monaco from 'monaco-editor';
+
+declare var monaco: typeof Monaco;
 
 @Component({
   selector: 'ngx-monaco-diff-editor',
@@ -13,7 +15,7 @@ declare var monaco: any;
   styleUrls: [ './base-editor.component.css' ],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class DiffEditorComponent extends BaseEditor {
+export class DiffEditorComponent extends BaseEditor<Monaco.editor.IStandaloneDiffEditor> {
 
   _originalModel: DiffEditorModel;
   _modifiedModel: DiffEditorModel;
@@ -62,8 +64,8 @@ export class DiffEditorComponent extends BaseEditor {
     this._originalModel.language = this._originalModel.language || options.language;
     this._modifiedModel.language = this._modifiedModel.language || options.language;
 
-    let originalModel = monaco.editor.createModel(this._originalModel.code, this._originalModel.language);
-    let modifiedModel = monaco.editor.createModel(this._modifiedModel.code, this._modifiedModel.language);
+    const originalModel = monaco.editor.createModel(this._originalModel.code, this._originalModel.language);
+    const modifiedModel = monaco.editor.createModel(this._modifiedModel.code, this._modifiedModel.language);
 
     this._editorContainer.nativeElement.innerHTML = '';
     const theme = options.theme;
