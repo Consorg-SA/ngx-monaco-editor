@@ -1,11 +1,11 @@
 {
   "name": "@consorg/ngx-monaco-editor",
-  "version": "11.0.4",
+  "version": "14.0.0",
   "private": false,
   "description": "[fork] Monaco Code Editor for Angular",
   "keywords": [
     "angular",
-    "angular 11",
+    "angular 14",
     "monaco",
     "monaco-editor",
     "code",
@@ -26,11 +26,11 @@
     "Atul Kumar <atulaggarwal4288@gmail.com>"
   ],
   "peerDependencies": {
-    "@angular/common": "^11.0.0",
-    "@angular/core": "^11.0.0",
+    "@angular/common": "^14.0.0",
+    "@angular/core": "^14.0.0",
     "monaco-editor": ">=0.52.0"
   },
   "dependencies": {
-    "tslib": "^2.0.0"
+    "tslib": "^2.3.0"
   }
 }
