@@ -1,4 +1,4 @@
-import { AfterViewInit, ElementRef, EventEmitter, Inject, Input, OnDestroy, Output, ViewChild } from '@angular/core';
+import { AfterViewInit, Directive, ElementRef, EventEmitter, Inject, Input, OnDestroy, Output, ViewChild } from '@angular/core';
 import { fromEvent, Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { NGX_MONACO_EDITOR_CONFIG, NgxMonacoEditorConfig } from './config';
@@ -8,6 +8,7 @@ import type * as Monaco from 'monaco-editor';
 let loadedMonaco = false;
 let loadPromise: Promise<void>;
 
+@Directive()
 export abstract class BaseEditor<T extends Monaco.editor.IEditor> implements AfterViewInit, OnDestroy {
 
   @ViewChild('editorContainer', { static: true }) _editorContainer: ElementRef;
